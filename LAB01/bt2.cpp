@@ -1,10 +1,42 @@
 #include <iostream>
+#include <limits>
 // nhap vao 2 phan so, xuat ket qua phan so lon hon
 using namespace std;
 struct Phanso { // dữ liệu phân số
     int tuso;
     int mauso;
 };
+
+// hàm nhập phân số hợp lệ
+// Input: phân số a
+// Output: Phân số hợp lệ (ko có chữ, kí tự đặc biệt, mẫu số khác 0)
+void Nhap_Phanso(Phanso &a)
+{
+    while (true)
+    {
+        cout <<"Nhap tu so va mau so: " << endl;
+        cin >> a.tuso >> a.mauso;
+
+        //KT ki tu dac biet
+        if ( cin.fail())
+        {
+            cout <<"Du lieu khong hop le (Ko duoc nhap chu cai hay ki tu dac biet)";
+
+            cin.clear(); // xoa trang thai loi
+            //tuy đã xoá cờ báo lỗi nhưng, nhưng dữ liệu nhập sai vẫn còn lưu trong buff nên cần xoá
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');//xoá dữ liệu lỗi
+            // nếu ko xoá thì khi nhập lại nó sẽ tiếp tục đọc dữ liệu lỗi
+            continue;
+        }
+        //KT mau so
+        if (a.mauso == 0) {
+            cout <<"mau so phai khac khong. Nhap lai mau so\n";
+            cin >> a.mauso;
+            break;
+        }
+        break;
+    }
+}
 
 // hàm tìm phân số lớn hơn (trong 2 phân số)
 //Input: Nhập vào tử số và mẫu số của 2 phân số
@@ -48,15 +80,11 @@ void Find_Phanso_lonhon (Phanso a, Phanso b)
 
 int main() {
     Phanso a, b;
-    cin >> a.tuso >> a.mauso;
-    cin >> b.tuso >> b.mauso;
+    
+    //Nhap so a va b
+    Nhap_Phanso(a);
+    Nhap_Phanso(b);
 
-    // kiểm tra xem mẫu số có = 0 hay không
-    if ( a.mauso ==0 || b.mauso ==0)
-    {
-        cout << "mau so khong hop le" << endl;
-        return 0;
-    }
     Find_Phanso_lonhon (a,b);
 
     return 0;

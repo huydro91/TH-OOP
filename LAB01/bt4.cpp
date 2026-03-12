@@ -13,7 +13,7 @@ void In_raNgay_ketiep (int day, int month, int year);// Ham in ra ngay ke tiep
 // Output: trả về false nếu ngày nhập vào bị sai, true nếu ngày nhập vào đúng
 bool kiemtra_ngaynhap(int day, int month, int year)
 {
-    if ( year <= 0) return false;
+    if ( year < 1 || year > 9999) return false;
 
     if ( month  < 1 || month > 12) return false;
 

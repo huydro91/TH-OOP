@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cmath>
+#include <limits>
 using namespace std;
 
 struct PhanSo // du lieu phan so
@@ -11,6 +12,39 @@ struct PhanSo // du lieu phan so
 //khai bao cac ham su dung
 int UCLN (int a, int b); // ham tim UOC CHUNG LON NHAT cua 2 so
 void In_Phanso_Darutgon (int &tuso, int &mauso); // ham rut gon va in ra phan so
+void Nhap_Phanso(PhanSo &a); // ham nhap phan so
+
+// hàm nhập phân số hợp lệ
+// Input: phân số a
+// Output: Phân số hợp lệ (ko có chữ, kí tự đặc biệt, mẫu số khác 0)
+void Nhap_Phanso(PhanSo &a)
+{
+    while (true)
+    {
+        cout <<"Nhap tu so va mau so: " << endl;
+        cin >> a.tuso >> a.mauso;
+
+        //KT ki tu dac biet
+        if ( cin.fail())
+        {
+            cout <<"Du lieu khong hop le (Ko duoc nhap chu cai hay ki tu dac biet)";
+
+            cin.clear(); // xoa trang thai loi
+            //tuy đã xoá cờ báo lỗi nhưng, nhưng dữ liệu nhập sai vẫn còn lưu trong buff nên cần xoá
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');//xoá dữ liệu lỗi
+            // nếu ko xoá thì khi nhập lại nó sẽ tiếp tục đọc dữ liệu lỗi
+            continue;
+        }
+        //KT mau so
+        if (a.mauso == 0) {
+            cout <<"mau so phai khac khong. Nhap lai mau so\n";
+            cin >> a.mauso;
+            break;
+        }
+        break;
+    }
+
+}
 // Ham tim Uoc Chung Lon Nhat
 // Input: a, b (hai so nguyen)
 // Output: UCLN cua a va b
@@ -65,14 +99,9 @@ void In_Phanso_Darutgon (int &tuso, int &mauso)
 
 int main() {
     PhanSo a;
-    cin >> a.tuso >> a.mauso;
-
-    // kiem tra mau so
-    while ( a.mauso == 0)
-    {
-        cout << "mau so phai khac khong, nhap lai mau so : ";
-        cin >> a.mauso;
-    }
+    
+    //nhap phan so
+    Nhap_Phanso(a);
 
     In_Phanso_Darutgon(a.tuso, a.mauso);
     return 0;

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <limits>
 #include <cmath>
 //tính tổng-hiệu-tích-thương giữa 2 phân số
 using namespace std;
@@ -14,6 +15,38 @@ struct Phanso { // dữ liệu phân số
 ll UCLN(ll a, ll b);// hàm tìm UCLN
 void inPhanSo(ll tu, ll mau); // hàm in phân số
 void tinhToan_PS(Phanso a, Phanso b); // hàm tính toán giữa 2 phân số
+void Nhap_Phanso(Phanso &a);
+
+// hàm nhập phân số hợp lệ
+// Input: phân số a
+// Output: Phân số hợp lệ (ko có chữ, kí tự đặc biệt, mẫu số khác 0)
+void Nhap_Phanso(Phanso &a)
+{
+    while (true)
+    {
+        cout <<"Nhap tu so va mau so: " << endl;
+        cin >> a.tuso >> a.mauso;
+
+        //KT ki tu dac biet
+        if ( cin.fail())
+        {
+            cout <<"Du lieu khong hop le (Ko duoc nhap chu cai hay ki tu dac biet)";
+
+            cin.clear(); // xoa trang thai loi
+            //tuy đã xoá cờ báo lỗi nhưng, nhưng dữ liệu nhập sai vẫn còn lưu trong buff nên cần xoá
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');//xoá dữ liệu lỗi
+            // nếu ko xoá thì khi nhập lại nó sẽ tiếp tục đọc dữ liệu lỗi
+            continue;
+        }
+        //KT mau so
+        if (a.mauso == 0) {
+            cout <<"mau so phai khac khong. Nhap lai mau so\n";
+            cin >> a.mauso;
+            break;
+        }
+        break;
+    }
+}
 
 // hàm tìm ước chung lớn nhất giữa 2 số a và b
 // Input: 2 số a và b
@@ -81,7 +114,10 @@ void tinhToan_PS(Phanso a, Phanso b) {
 
 int main() {
     Phanso a, b;
-    if (!(cin >> a.tuso >> a.mauso >> b.tuso >> b.mauso)) return 0;
+    
+    //nhap phan so
+    Nhap_Phanso(a);
+    Nhap_Phanso(b);
 
     tinhToan_PS(a, b);
 
